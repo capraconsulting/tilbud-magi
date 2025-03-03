@@ -1,19 +1,18 @@
 {
-  "name": "",
+  "name": "tilbudmagi-function",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/src/functions/*.js",
+  "main": "dist/src/{index.js,functions/*.js}",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "clean": "rimraf dist",
-    "prestart": "npm run clean && npm run build",
     "start": "func start",
+    "deploy": "func azure functionapp publish tilbudmagi-dev-function-app",
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
-    "openai": "^4.85.4"
+    "openai": "^4.86.1"
   },
   "devDependencies": {
     "@types/node": "18.x",
