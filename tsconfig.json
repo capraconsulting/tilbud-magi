@@ -3,7 +3,7 @@
     "outDir": "./dist",
     "rootDir": "./",
     "module": "CommonJS",
-    "target": "ES6"
+    "target": "es2022"
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]
