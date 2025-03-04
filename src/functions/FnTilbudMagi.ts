@@ -1,6 +1,8 @@
 import {app, HttpRequest, HttpResponseInit, InvocationContext} from "@azure/functions";
 import {PromptAI} from '../app/OpenAIClient'
 import {Readable} from "node:stream";
+import {Root} from "../types/Notion";
+
 
 async function streamToString(stream: Readable): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -14,11 +16,11 @@ async function streamToString(stream: Readable): Promise<string> {
 export async function TilbudMagiFunction(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
-    const readableStream = Readable.from(request.body);
-    const jsonTextBlob = await streamToString(readableStream);
-    const incomingData = JSON.parse(jsonTextBlob)
+    const readableStream: Readable = Readable.from(request.body);
+    const jsonTextBlob: string = await streamToString(readableStream);
+    const incomingData: Root = JSON.parse(jsonTextBlob)
 
-    console.log("Received data: \n", incomingData)
+    console.log("Received data: \n", incomingData.data.properties["➡️ BEHOV FRA KUNDEN (💬 FRITEKST)"])
 
     let ai_output = await PromptAI({model: 'gpt-4o-mini', role: 'user', instruction: 'Say hello'})
 
