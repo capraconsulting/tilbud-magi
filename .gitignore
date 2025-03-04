@@ -7,3 +7,14 @@
 /dataSources/
 /dataSources.local.xml
 .idea
+.vscode
+
+# Terraform config files
+.terraform*
+*.tfvars
+*.tfstate*
+.azure
+
+.github/
+/node_modules/
+/dist/
