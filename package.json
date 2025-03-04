@@ -9,6 +9,7 @@
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
+    "predeploy": "npm run clean && npm run build",
     "deploy": "func azure functionapp publish tilbudmagi-dev-function-app",
     "test": "echo \"No tests yet...\""
   },
