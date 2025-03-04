@@ -39,6 +39,15 @@ resource "azurerm_application_insights" "app_insights" {
   application_type    = "web"
 }
 
+resource "azurerm_log_analytics_workspace" "log_analytics" {
+  name                = "${var.project}-${var.environment}-log-analytics-workspace"
+  location            = azurerm_resource_group.function_rg.location
+  resource_group_name = azurerm_resource_group.function_rg.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
+
 resource "azurerm_linux_function_app" "function_app" {
   name                       = "${var.project}-${var.environment}-function-app"
   location                   = azurerm_resource_group.function_rg.location
@@ -71,5 +80,15 @@ resource "azurerm_linux_function_app" "function_app" {
 
   tags = {
     environment = var.environment
+  }
+}
+
+resource "azurerm_monitor_diagnostic_setting" "function_diagnostics" {
+  name                       = "function-app-diagnostics"
+  target_resource_id         = azurerm_linux_function_app.function_app.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics.id
+
+  enabled_log {
+    category = "FunctionAppLogs"
   }
 }
