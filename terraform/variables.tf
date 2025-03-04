@@ -15,3 +15,13 @@ variable "location" {
   description = "Azure region to deploy module to"
   default = "North Europe"
 }
+
+variable "openai_api_key" {
+  type = string
+  default = "missing key"
+}
+
+variable "flowcase_api_key" {
+  type = string
+  default = "missing key"
+}

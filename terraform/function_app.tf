@@ -50,6 +50,8 @@ resource "azurerm_linux_function_app" "function_app" {
     FUNCTIONS_WORKER_RUNTIME = "node"
     AzureWebJobsStorage      = azurerm_storage_account.function_storage_account.primary_blob_connection_string
     WEBSITE_RUN_FROM_PACKAGE = "1"
+    OPENAI_API_KEY           = var.openai_api_key
+    FLOWCASE_API_KEY         = var.flowcase_api_key
   }
 
   site_config {
