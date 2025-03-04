@@ -1,27 +1,32 @@
+variable "subscription_id" {
+  type    = string
+  default = "abc-123"
+}
+
 variable "project" {
-  type = string
+  type        = string
   description = "Project name"
-  default = "tilbudmagi"
+  default     = "tilbudmagi"
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "Environment (dev / stage / prod)"
-  default = "dev"
+  default     = "dev"
 }
 
 variable "location" {
-  type = string
+  type        = string
   description = "Azure region to deploy module to"
-  default = "North Europe"
+  default     = "North Europe"
 }
 
 variable "openai_api_key" {
-  type = string
+  type    = string
   default = "missing key"
 }
 
 variable "flowcase_api_key" {
-  type = string
+  type    = string
   default = "missing key"
 }
