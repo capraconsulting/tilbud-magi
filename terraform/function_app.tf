@@ -32,6 +32,13 @@ resource "azurerm_service_plan" "function_service_plan" {
   }
 }
 
+resource "azurerm_application_insights" "app_insights" {
+  name                = "${var.project}-${var.environment}-appinsights"
+  resource_group_name = azurerm_resource_group.function_rg.name
+  location            = azurerm_resource_group.function_rg.location
+  application_type    = "web"
+}
+
 resource "azurerm_linux_function_app" "function_app" {
   name                       = "${var.project}-${var.environment}-function-app"
   location                   = azurerm_resource_group.function_rg.location
@@ -47,11 +54,13 @@ resource "azurerm_linux_function_app" "function_app" {
   }
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "node"
-    AzureWebJobsStorage      = azurerm_storage_account.function_storage_account.primary_blob_connection_string
-    WEBSITE_RUN_FROM_PACKAGE = "1"
-    OPENAI_API_KEY           = var.openai_api_key
-    FLOWCASE_API_KEY         = var.flowcase_api_key
+    FUNCTIONS_WORKER_RUNTIME              = "node"
+    AzureWebJobsStorage                   = azurerm_storage_account.function_storage_account.primary_blob_connection_string
+    WEBSITE_RUN_FROM_PACKAGE              = "1"
+    APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.app_insights.instrumentation_key
+    APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.app_insights.connection_string
+    OPENAI_API_KEY                        = var.openai_api_key
+    FLOWCASE_API_KEY                      = var.flowcase_api_key
   }
 
   site_config {
